@@ -43,11 +43,11 @@ namespace ex10_Controller.Controllers
          * 
          * **/
         [HttpGet("get")]
-        public IActionResult GetUserById(int? id) // [FromQuery]
+        public async Task<IActionResult> GetUserById(int? id) // [FromQuery]
         {
             if (id is not null)
             {
-                var user = _db.Users.FirstOrDefault(user => user.Id == id.Value);
+                var user = await _db.Users.FirstOrDefaultAsync(user => user.Id == id.Value);
                 if (user is not null)
                 {
                     return Ok(user);
@@ -98,7 +98,7 @@ namespace ex10_Controller.Controllers
         [HttpPut("update/{necessaryId:int}")] // [FromRoute]
         public async Task<IActionResult> UpdateUser(int necessaryId, string name, string position)
         {
-            var user = _db.Users.FirstOrDefault(user => user.Id == necessaryId);
+            var user = await _db.Users.FirstOrDefaultAsync(user => user.Id == necessaryId);
 
             if (user is not null)
             {
